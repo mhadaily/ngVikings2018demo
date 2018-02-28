@@ -1,0 +1,39 @@
+<div class="containerWrapper">
+  <mat-toolbar color="primary">
+    <span>ngVikings 2018</span>
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-fill-remaining-space"></span>
+    <button mat-icon-button class="d-none d-sm-inline" (click)="onSetting()">
+      <mat-icon>settings</mat-icon>
+    </button>
+  </mat-toolbar>
+  <div style="padding:2rem 0">
+    <mat-card-content *ngIf="!isEditing">
+      <mat-accordion *ngFor="let note of (notes$ | async)">
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            {{ note.title }}
+          </mat-expansion-panel-header>
+          {{ note.desc }}
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+
+    <mat-card-content *ngIf="isEditing">
+      <form class="example-form" style="text-align:center" [formGroup]="addNoteFrom">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Title" formControlName="title">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <textarea matInput placeholder="comment" row="4" formControlName="desc"></textarea>
+        </mat-form-field>
+
+        <button mat-raised-button [color]="addNoteFrom.valid ? 'warn' : 'grey'" (click)="addNote()">Save</button>
+      </form>
+    </mat-card-content>
+  </div>
+  <button mat-fab style="position:fixed; bottom: 1rem; right: 1rem;" (click)="toggeladd()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
